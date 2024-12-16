@@ -3,20 +3,26 @@
 собой. Определить порядковый номер числа, отличного от остальных.
 '''
 
-numbers = []
-for i in range(4):
-    num = int(input(f"Введите число {i + 1}: "))
-    numbers.append(num)
+def find_unique_number_index(numbers):
 
-unique_index = -1
+    if len(numbers) != 4:
+        raise ValueError("Должно быть ровно 4 числа")
 
-for i in range(4):
+    count = {}
+    for number in numbers:
+        count[number] = count.get(number, 0) + 1
 
-    if numbers[i] != numbers[(i + 1) % 4] and numbers[i] != numbers[(i + 2) % 4]:
-        unique_index = i + 1  
-        break
+    unique_number = None
+    for number, cnt in count.items():
+        if cnt == 1:
+            unique_number = number
+            break
 
-if unique_index != -1:
-    print(f"Порядковый номер числа, отличного от остальных: {unique_index}")
-else:
-    print("Нет уникального числа.")
+    if unique_number is not None:
+        return numbers.index(unique_number) + 1  
+    else:
+        return None  
+
+numbers = [2, 2, 3, 2]
+index = find_unique_number_index(numbers)
+print(f"Порядковый номер отличающегося числа: {index}")
